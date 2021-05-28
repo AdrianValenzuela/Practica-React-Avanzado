@@ -1,19 +1,18 @@
 // libraries imports
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 // local imports
 import { Button } from '../../shared';
-import authService from '../../../api/auth.js';
+import { logoutAction } from '../../../store/actions.js';
 
 function AuthButton({ isLogged, onLogout }) {
 
-    const handleLogoutClick = () => {
-        authService.logout().then(onLogout);
-    };
+    const dispatch = useDispatch();
 
     const isLoggedProps = {
-        onClick: handleLogoutClick,
+        onClick: () => dispatch(logoutAction()),
         text: 'Log out'
     };
 

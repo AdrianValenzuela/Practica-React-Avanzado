@@ -1,44 +1,39 @@
 //libraries imports
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // local imports
 import './App.css';
 import { AdvertsPage, AdvertDetailPage, NewAdvertPage } from './components/adverts';
 import { LoginPage, PrivateRoute } from './components/auth';
 import { PageNotFound } from './components/layout';
+import { getIsLogged } from './store/selectors.js';
 
-function App({ isInitiallyLogged }) {
+function App() {
 
-  const [isLogged, setIsLogged] = React.useState(isInitiallyLogged);
-  const handleLogin = () => {
-    setIsLogged(true);
-  };
-
-  const handleLogout = () => {
-    setIsLogged(false);
-  };
+  const isLogged = useSelector(getIsLogged);
 
   return (
     <div className="App">
       <Switch>
         <PrivateRoute isLogged={isLogged} path='/adverts'>
-          <AdvertsPage isLogged={isLogged} onLogout={handleLogout} />
+          <AdvertsPage />
         </PrivateRoute>
         <PrivateRoute isLogged={isLogged} exact path='/advert/new'>
-          <NewAdvertPage isLogged={isLogged} onLogout={handleLogout} />
+          <NewAdvertPage isLogged={isLogged} />
         </PrivateRoute>
         <PrivateRoute isLogged={isLogged} path='/advert/:id'>
-          {routeProps => <AdvertDetailPage isLogged={isLogged} onLogout={handleLogout} {...routeProps}/>}          
+          {routeProps => <AdvertDetailPage isLogged={isLogged} {...routeProps}/>}          
         </PrivateRoute>
         <Route path='/login'>
-          { isLogged ? <Redirect to='/' /> : <LoginPage onLogin={handleLogin} /> }
+          { isLogged ? <Redirect to='/' /> : <LoginPage /> }
         </Route>
         <Route exact path='/'>
           <Redirect to='/adverts' />
         </Route>        
         <Route path='/404'>
-          <PageNotFound isLogged={isLogged} onLogout={handleLogout} />
+          <PageNotFound />
         </Route>
         <Route>
           <Redirect to='/404' />

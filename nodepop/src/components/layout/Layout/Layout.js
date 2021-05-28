@@ -6,10 +6,10 @@ import Header from '../Header';
 import Footer from '../Footer';
 import './Layout.css';
 
-function Layout({ children, ...props }) {
+function Layout({ children }) {
     return (
         <div className='layout'>
-            <Header {...props}/>
+            <Header />
             <main className='content'>
                 {children}
             </main>

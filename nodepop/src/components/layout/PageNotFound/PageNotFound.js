@@ -5,9 +5,9 @@ import React from 'react'
 import Layout from '../Layout';
 import './PageNotFound.css';
 
-function PageNotFound({ ...props }) {
+function PageNotFound() {
     return (
-        <Layout {...props}>
+        <Layout>
             <div className='notFound'>
             404 | Page not found
             </div>

@@ -1,6 +1,7 @@
 // libraries imports
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 // local imports
 import advertsService from '../../../api/adverts.js'; 
@@ -8,6 +9,11 @@ import { Layout } from '../../layout';
 import { FiltersForm } from '../../filters';
 import { Button } from '../../shared';
 import AdvertsList from './AdvertsList.js';
+import { 
+    getAdverts as newGetAdverts,
+    getTags
+ } from '../../../store/selectors.js';
+import { advertsLoadAction, tagsLoadAction } from '../../../store/actions.js';
 
 function EmptyList() {
     return (
@@ -20,10 +26,10 @@ function EmptyList() {
     );
 }
 
-function AdvertsPage({ ...props }) {
-
-    const [adverts, setAdverts] = React.useState([]);
-    const [tags, setTags] = React.useState([]);
+function AdvertsPage() {
+    const adverts = useSelector(newGetAdverts);
+    const tags = useSelector(getTags);
+    const dispatch = useDispatch();
 
     const initialFilters = {
         name: '',
@@ -46,7 +52,8 @@ function AdvertsPage({ ...props }) {
     const handleSubmit = async filters => {
         try {
             // pedimos los anuncios al back con filtros formulario
-            await getAdverts(filters).then(setAdverts);
+            // await getAdverts(filters).then(setAdverts);
+            return;
         } catch (error) {
             console.error(error);
         }
@@ -60,14 +67,15 @@ function AdvertsPage({ ...props }) {
 
     React.useEffect(() => {
         // pedimos los anuncios al back con filtros iniciales
-        getAdverts(initialFilters).then(setAdverts);
+        // getAdverts(initialFilters).then(setAdverts);
+        dispatch(advertsLoadAction());
         // pedimos los tags al back
-        advertsService.getAdvertsTags().then(setTags);
-    }, []);    
+        dispatch(tagsLoadAction());
+    }, []);
 
     return (
         <div>
-            <Layout {...props} >
+            <Layout >
                 <FiltersForm {...filterProps}/>
                 <div className='ads'>
                     { adverts.length ? <AdvertsList adverts={adverts} /> : <EmptyList /> }
