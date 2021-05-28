@@ -2,6 +2,8 @@
 import {
     AUTH_LOGIN_REQUEST,
     AUTH_LOGIN_SUCCESS,
+    AUTH_LOGOUT_REQUEST,
+    AUTH_LOGOUT_SUCCESS,
     ADVERTS_LOADED_REQUEST,
     ADVERTS_LOADED_SUCCESS,
     TAGS_LOADED_REQUEST,
@@ -29,6 +31,9 @@ export function auth(state = initialState.auth, action) {
     switch (action.type) {
         case AUTH_LOGIN_SUCCESS:
             return true;
+
+        case AUTH_LOGOUT_SUCCESS:
+            return false;
 
         default:
             return state;
@@ -62,11 +67,13 @@ export function ui(state = initialState.ui, action) {
 
     switch (action.type) {
         case AUTH_LOGIN_REQUEST:
+        case AUTH_LOGOUT_REQUEST:
         case ADVERTS_LOADED_REQUEST:
         case TAGS_LOADED_REQUEST:
             return { ...state, loading: true, error: null };
 
         case AUTH_LOGIN_SUCCESS:
+        case AUTH_LOGOUT_SUCCESS:
         case ADVERTS_LOADED_SUCCESS:
         case TAGS_LOADED_SUCCESS:
             return { ...state, loading: false, error: null };

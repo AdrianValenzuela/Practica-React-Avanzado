@@ -77,7 +77,7 @@ export const logoutAction = () => {
         dispatch(authLogoutRequest());
         try {
             await api.authService.logout();
-            dispatch(authLogoutSuccess);
+            dispatch(authLogoutSuccess());
         } catch (error) {
             dispatch(authLogoutFailure(error));
         }

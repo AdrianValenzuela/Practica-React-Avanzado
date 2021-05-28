@@ -1,14 +1,16 @@
 // libraries imports
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // local imports
 import { Button } from '../../shared';
 import { logoutAction } from '../../../store/actions.js';
+import { getIsLogged } from '../../../store/selectors';
 
-function AuthButton({ isLogged, onLogout }) {
+function AuthButton() {
 
+    const isLogged = useSelector(getIsLogged);
     const dispatch = useDispatch();
 
     const isLoggedProps = {
