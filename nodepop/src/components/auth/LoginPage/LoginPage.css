@@ -1,0 +1,18 @@
+.loginPage {
+    margin-top: 60px;
+    margin-left: 400px;
+    margin-right: 400px;
+}
+
+input, button {
+    margin-top: 10px;
+}
+
+.checkbox {
+    display: block;
+    width: 125px;
+}
+
+.checkbox input {
+    margin-right: 5px;
+}

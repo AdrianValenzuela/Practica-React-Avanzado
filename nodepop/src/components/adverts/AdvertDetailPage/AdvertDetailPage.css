@@ -1,0 +1,33 @@
+.title {
+  color: #13c1ac;
+}
+
+.advert-image {
+  width: 20%;
+  height: 20%;
+}
+
+.details {
+  margin-left: 10%;
+  margin-right: 20%;
+  display: flex;
+  flex-direction: column;
+}
+
+.advert-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.advert {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.delete-button button {
+  width: 100px;
+  position: fixed;
+  right: 20px;
+}

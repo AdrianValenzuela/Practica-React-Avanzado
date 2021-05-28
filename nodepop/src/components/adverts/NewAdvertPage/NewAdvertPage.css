@@ -1,0 +1,16 @@
+.title {
+    color: #13c1ac;
+}
+
+.newAdvert-form {
+    margin-top: 60px;
+    margin-left: 400px;
+    margin-right: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.newAdvert-form button {
+    width: 130px;
+    margin-left: 500px;
+}

@@ -1,0 +1,9 @@
+.select-tags {
+    display: flex;
+    flex-direction: row;
+}
+
+.select-tags label {
+    margin-top: 15px;
+    margin-right: 5px;
+}

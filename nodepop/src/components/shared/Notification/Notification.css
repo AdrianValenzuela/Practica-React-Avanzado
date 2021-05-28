@@ -1,0 +1,15 @@
+.notification {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.notification.hidden {
+    display: none;
+}
+
+.notification button {
+    width: 100px;
+}

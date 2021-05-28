@@ -1,0 +1,30 @@
+.filters {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: solid 1px #13c1ac;
+}
+
+.filters input {
+    width: 17%;
+}
+
+.checkbox-filters input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  transform: scale(2);
+  padding: 10px;
+}
+
+.checkbox-filters
+{
+  margin-top: 10px;
+  font-size: 110%;
+  display: inline;
+}

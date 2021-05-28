@@ -1,0 +1,8 @@
+.card {
+    width: 250px;
+}
+
+.card-content-info {
+    display: flex;
+    flex-direction: column;
+}

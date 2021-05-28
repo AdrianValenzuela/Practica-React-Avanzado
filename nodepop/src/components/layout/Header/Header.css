@@ -1,0 +1,15 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css";
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* margin-top: 10px; */
+    border-bottom: solid 1px #13c1ac;
+}
+
+.header .logo {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
