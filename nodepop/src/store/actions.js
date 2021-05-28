@@ -9,6 +9,9 @@ import {
     ADVERTS_LOADED_REQUEST,
     ADVERTS_LOADED_SUCCESS,
     ADVERTS_LOADED_FAILURE,
+    ADVERTS_FILTERED_REQUEST,
+    ADVERTS_FILTERED_SUCCESS,
+    ADVERTS_FILTERED_FAILURE,
     TAGS_LOADED_REQUEST,
     TAGS_LOADED_SUCCESS,
     TAGS_LOADED_FAILURE,
@@ -118,6 +121,39 @@ export const advertsLoadAction = (filters = {}) => {
             dispatch(advertsLoadedSuccess(adverts));
         } catch (error) {
             dispatch(advertsLoadedFailure(error));
+        }
+    };
+};
+
+export const advertsFilteredRequest = () => {
+    return {
+        type: ADVERTS_FILTERED_REQUEST
+    };
+};
+
+export const advertsFilteredSuccess = (filters) => {
+    return {
+        type: ADVERTS_FILTERED_SUCCESS,
+        payload: filters
+    };
+};
+
+export const advertsFilteredFailure = (error) => {
+    return {
+        type: ADVERTS_FILTERED_FAILURE,
+        payload: error,
+        error: true
+    };
+};
+
+export const advertsFilterAction = (filters) => {
+    return async function (dispatch, getState, { api }) {
+        dispatch(advertsFilteredRequest());
+        try{
+            const adverts = await api.advertsService.getAdverts(filters);
+            dispatch(advertsFilteredSuccess(adverts));
+        } catch (error) {
+            dispatch(advertsFilteredFailure(error));
         }
     };
 };

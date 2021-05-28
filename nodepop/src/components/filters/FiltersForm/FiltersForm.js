@@ -1,11 +1,26 @@
 // libraries imports
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // local imports
 import { FormField, Checkbox, Button, Select } from '../../shared';
 import './FiltersForm.css';
+import { getTags } from '../../../store/selectors.js';
+import { advertsFilterAction } from '../../../store/actions.js';
 
-function FiltersForm({ initialFilters, tags, onSubmit }) {
+function FiltersForm() {
+
+    const initialFilters = {
+        name: '',
+        minPrice: null,
+        maxPrice: null,
+        sale: false,
+        purchase: false,
+        tags: []
+    };
+
+    const tags = useSelector(getTags);
+    const dispatch = useDispatch();
 
     const [filters, setFilters] = React.useState(initialFilters);
 
@@ -31,11 +46,11 @@ function FiltersForm({ initialFilters, tags, onSubmit }) {
                                      event.target.value
             };
         });
-    }
+    };
 
     const handleSubmitFilterForm = event => {
         event.preventDefault();
-        onSubmit(filters);
+        dispatch(advertsFilterAction(filters));  
     };
 
     return (
