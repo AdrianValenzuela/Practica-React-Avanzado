@@ -12,6 +12,8 @@ import {
     ADVERTS_CREATED_SUCCESS,
     ADVERTS_DETAIL_REQUEST,
     ADVERTS_DETAIL_SUCCESS,
+    ADVERTS_DELETED_REQUEST,
+    ADVERTS_DELETED_SUCCESS,
     TAGS_LOADED_REQUEST,
     TAGS_LOADED_SUCCESS,
     UI_RESET_ERROR
@@ -56,6 +58,9 @@ export function adverts(state = initialState.adverts, action) {
         case ADVERTS_DETAIL_SUCCESS:
             return { ...state, loaded: false, data: [...state.data, action.payload] };
 
+        case ADVERTS_DELETED_SUCCESS:
+            return { ...state, loaded: false }; // no hace falta cargar data, puesto que loaded está a false y redirigimos a / -> los cargará siempre que eliminemos
+
         default:
             return state
     }
@@ -83,6 +88,7 @@ export function ui(state = initialState.ui, action) {
         case ADVERTS_FILTERED_REQUEST:
         case ADVERTS_CREATED_REQUEST:
         case ADVERTS_DETAIL_REQUEST:
+        case ADVERTS_DELETED_REQUEST:
         case TAGS_LOADED_REQUEST:
             return { ...state, loading: true, error: null };
 
@@ -92,6 +98,7 @@ export function ui(state = initialState.ui, action) {
         case ADVERTS_FILTERED_SUCCESS:
         case ADVERTS_CREATED_SUCCESS:
         case ADVERTS_DETAIL_SUCCESS:
+        case ADVERTS_DELETED_SUCCESS:
         case TAGS_LOADED_SUCCESS:
             return { ...state, loading: false, error: null };
 

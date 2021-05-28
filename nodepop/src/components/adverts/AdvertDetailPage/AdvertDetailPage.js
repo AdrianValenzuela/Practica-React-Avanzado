@@ -2,6 +2,7 @@
 import React from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // local imports
 import advertsService from '../../../api/adverts.js';
@@ -9,7 +10,7 @@ import { Layout } from '../../layout';
 import { Button, Notification } from '../../shared';
 import './AdvertDetailPage.css';
 import { getUi, getAdvertDetail } from '../../../store/selectors';
-import { advertsDetailAction } from '../../../store/actions';
+import { advertsDetailAction, advertsDeleteAction } from '../../../store/actions';
 
 class AdvertDetailPage extends React.Component {
     componentDidMount() {
@@ -43,6 +44,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 function AdvertDetails({ advert }) {
+    const dispatch = useDispatch();
 
     const defaultImage = 'https://www.allianceplast.com/wp-content/uploads/2017/11/no-image.png'
 
@@ -56,7 +58,7 @@ function AdvertDetails({ advert }) {
 
     const handleConfirmDelete = () => {
         setNotification(null);
-        advertsService.deleteAdvert(advert.id).then(history.push('/'));
+        dispatch(advertsDeleteAction(advert.id));
     }
 
     const resetNotification = () => {

@@ -18,6 +18,9 @@ import {
     ADVERTS_DETAIL_REQUEST,
     ADVERTS_DETAIL_SUCCESS,
     ADVERTS_DETAIL_FAILURE,
+    ADVERTS_DELETED_REQUEST,
+    ADVERTS_DELETED_SUCCESS,
+    ADVERTS_DELETED_FAILURE,
     TAGS_LOADED_REQUEST,
     TAGS_LOADED_SUCCESS,
     TAGS_LOADED_FAILURE,
@@ -202,6 +205,8 @@ export const advertsCreatAction = (newAdvert, photo) => {
 
             const createdAdvert = await api.advertsService.createAdvert(data);
             dispatch(advertsCreatedSuccess(createdAdvert));
+
+            // redirect
             history.push(`/advert/${createdAdvert.id}`);
         } catch (error) {
             dispatch(advertsCreatedFailure(error));
@@ -244,6 +249,42 @@ export const advertsDetailAction = (advertId) => {
             return advert;
         } catch (error) {
             dispatch(advertsDetailFailure());
+        }
+    };
+};
+
+export const advertsDeletedRequest = () => {
+    return {
+        type: ADVERTS_DELETED_REQUEST
+    };
+};
+
+export const advertsDeletedSuccess = (advertId) => {
+    return {
+        type: ADVERTS_DELETED_SUCCESS,
+        payload: advertId
+    };
+};
+
+export const advertsDeletedFailure = (error) => {
+    return {
+        type: ADVERTS_DELETED_FAILURE,
+        payload: error,
+        error: true
+    };
+};
+
+export const advertsDeleteAction = (advertId) => {
+    return async function (dispatch, getState, { api, history }) {
+        dispatch(advertsDeletedRequest());
+        try {
+            await api.advertsService.deleteAdvert(advertId);
+            dispatch(advertsDeletedSuccess(advertId));
+
+            // redirect
+            history.push('/');
+        } catch (error) {
+            dispatch(advertsDeletedFailure(error));
         }
     };
 };
