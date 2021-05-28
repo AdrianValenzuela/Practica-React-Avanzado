@@ -18,10 +18,10 @@ function App() {
     <div className="App">
       <Switch>
         <PrivateRoute isLogged={isLogged} path='/adverts'>
-          <AdvertsPage isLogged={isLogged} />
+          <AdvertsPage />
         </PrivateRoute>
         <PrivateRoute isLogged={isLogged} exact path='/advert/new'>
-          <NewAdvertPage isLogged={isLogged} />
+          <NewAdvertPage />
         </PrivateRoute>
         <PrivateRoute isLogged={isLogged} path='/advert/:id'>
           {routeProps => <AdvertDetailPage isLogged={isLogged} {...routeProps}/>}          

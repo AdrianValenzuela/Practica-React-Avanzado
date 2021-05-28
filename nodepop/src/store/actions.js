@@ -12,6 +12,9 @@ import {
     ADVERTS_FILTERED_REQUEST,
     ADVERTS_FILTERED_SUCCESS,
     ADVERTS_FILTERED_FAILURE,
+    ADVERTS_CREATED_REQUEST,
+    ADVERTS_CREATED_SUCCESS,
+    ADVERTS_CREATED_FAILURE,
     TAGS_LOADED_REQUEST,
     TAGS_LOADED_SUCCESS,
     TAGS_LOADED_FAILURE,
@@ -108,7 +111,7 @@ export const advertsLoadedFailure = (error) => {
     };
 };
 
-export const advertsLoadAction = (filters = {}) => {
+export const advertsLoadAction = () => {
     return async function (dispatch, getState, { api }) {
         const advertsLoaded = getAdvertsLoaded(getState());
         if (advertsLoaded) {
@@ -117,7 +120,7 @@ export const advertsLoadAction = (filters = {}) => {
 
         dispatch(advertsLoadedRequest());
         try{
-            const adverts = await api.advertsService.getAdverts(filters);
+            const adverts = await api.advertsService.getAdverts({});
             dispatch(advertsLoadedSuccess(adverts));
         } catch (error) {
             dispatch(advertsLoadedFailure(error));
@@ -154,6 +157,51 @@ export const advertsFilterAction = (filters) => {
             dispatch(advertsFilteredSuccess(adverts));
         } catch (error) {
             dispatch(advertsFilteredFailure(error));
+        }
+    };
+};
+
+
+export const advertsCreatedRequest = () => {
+    return {
+        type: ADVERTS_CREATED_REQUEST
+    };
+};
+
+export const advertsCreatedSuccess = (advert) => {
+    return {
+        type: ADVERTS_CREATED_SUCCESS,
+        payload: advert
+    };
+};
+
+export const advertsCreatedFailure = (error) => {
+    return {
+        type: ADVERTS_CREATED_FAILURE,
+        payload: error,
+        error: true
+    };
+};
+
+export const advertsCreatAction = (newAdvert, photo) => {
+    return async function (dispatch, getState, { api, history }) {
+        dispatch(advertsCreatedRequest());
+        try {
+            let data = new FormData();
+            data.append("name", newAdvert.name);
+            data.append("price", newAdvert.price);
+            data.append("sale", newAdvert.sale);
+            data.append("tags", newAdvert.tags);
+            
+            if (photo.length) {
+                data.append("photo", new Blob([photo[0]], {type: 'multipart/form-data' }));
+            }
+
+            const createdAdvert = await api.advertsService.createAdvert(data);
+            dispatch(advertsCreatedSuccess(createdAdvert));
+            history.push(`/advert/${createdAdvert.id}`);
+        } catch (error) {
+            dispatch(advertsCreatedFailure(error));
         }
     };
 };

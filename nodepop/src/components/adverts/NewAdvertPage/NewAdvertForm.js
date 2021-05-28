@@ -1,10 +1,12 @@
 // libraries imports
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 // local imports
 import { Button, FormField, Checkbox, Select } from '../../shared';
+import { getTags } from '../../../store/selectors.js';
 
-function NewAdvertForm({ tags, onSubmit }) {
+function NewAdvertForm({ onSubmit }) {
 
     const initialValues = {
         name: '',
@@ -15,6 +17,8 @@ function NewAdvertForm({ tags, onSubmit }) {
 
     const photo = React.createRef();
     const [newAdvert, setNewAdvert] = React.useState(initialValues);
+
+    const tags = useSelector(getTags);
 
     const handleNewAdvert = event => {
         let tagsValues = [];
