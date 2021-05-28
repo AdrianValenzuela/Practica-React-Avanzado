@@ -1,37 +1,46 @@
 // libraries imports
 import React from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // local imports
 import advertsService from '../../../api/adverts.js';
 import { Layout } from '../../layout';
 import { Button, Notification } from '../../shared';
 import './AdvertDetailPage.css';
+import { getUi, getAdvertDetail } from '../../../store/selectors';
+import { advertsDetailAction } from '../../../store/actions';
 
-function AdvertDetailPage({ ...props }) {
-    const [advert, setAdvert] = React.useState(null)
-    const [error, setError] = React.useState(null);
-
-    React.useEffect(() =>{
-        const { match } = {...props};
-        advertsService.getAdvertDetail(match.params.id).then(advert => {
-            setAdvert(advert);
-        }).catch(error => {
-            setError(error);
-        });
-    }, []);
-
-    if (error) {
-        return <Redirect to='/404' />
+class AdvertDetailPage extends React.Component {
+    componentDidMount() {
+        const { match, onLoad } = this.props;
+        onLoad(match.params.id);
     }
 
-    return (
-        <Layout { ...props }>
-            {advert && <AdvertDetails advert={advert} />}
-        </Layout>
+    render() {
+        const { advert, error } = this.props;
         
-    );
+        if (error) {
+            return <Redirect to='/404' />
+        }
+
+        return (
+            <Layout>
+                {advert && <AdvertDetails advert={advert} />}
+            </Layout>        
+        );
+    }
 }
+
+const mapStateToProps = (state, ownProps) => ({
+  advert: getAdvertDetail(state, ownProps.match.params.id),
+  ...getUi(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoad: advertId => dispatch(advertsDetailAction(advertId))
+});
+
 
 function AdvertDetails({ advert }) {
 
@@ -77,4 +86,5 @@ function AdvertDetails({ advert }) {
     );
 }
 
-export default AdvertDetailPage;
+// export default AdvertDetailPage;
+export default connect(mapStateToProps, mapDispatchToProps)(AdvertDetailPage);

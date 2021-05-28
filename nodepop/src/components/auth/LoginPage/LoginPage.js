@@ -10,8 +10,8 @@ import { ErrorMessage } from '../../shared';
 import {
   loginAction,
   resetError
-} from '../../../store/actions.js';
-import { getUi } from '../../../store/selectors.js';
+} from '../../../store/actions';
+import { getUi } from '../../../store/selectors';
 
 function LoginPage() {
     const dispatch = useDispatch();

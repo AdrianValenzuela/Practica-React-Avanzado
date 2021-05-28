@@ -10,6 +10,8 @@ import {
     ADVERTS_FILTERED_SUCCESS,
     ADVERTS_CREATED_REQUEST,
     ADVERTS_CREATED_SUCCESS,
+    ADVERTS_DETAIL_REQUEST,
+    ADVERTS_DETAIL_SUCCESS,
     TAGS_LOADED_REQUEST,
     TAGS_LOADED_SUCCESS,
     UI_RESET_ERROR
@@ -51,6 +53,7 @@ export function adverts(state = initialState.adverts, action) {
             return { ...state, loaded: true, data: action.payload }
 
         case ADVERTS_CREATED_SUCCESS:
+        case ADVERTS_DETAIL_SUCCESS:
             return { ...state, loaded: false, data: [...state.data, action.payload] };
 
         default:
@@ -79,6 +82,7 @@ export function ui(state = initialState.ui, action) {
         case ADVERTS_LOADED_REQUEST:
         case ADVERTS_FILTERED_REQUEST:
         case ADVERTS_CREATED_REQUEST:
+        case ADVERTS_DETAIL_REQUEST:
         case TAGS_LOADED_REQUEST:
             return { ...state, loading: true, error: null };
 
@@ -87,6 +91,7 @@ export function ui(state = initialState.ui, action) {
         case ADVERTS_LOADED_SUCCESS:
         case ADVERTS_FILTERED_SUCCESS:
         case ADVERTS_CREATED_SUCCESS:
+        case ADVERTS_DETAIL_SUCCESS:
         case TAGS_LOADED_SUCCESS:
             return { ...state, loading: false, error: null };
 

@@ -15,12 +15,15 @@ import {
     ADVERTS_CREATED_REQUEST,
     ADVERTS_CREATED_SUCCESS,
     ADVERTS_CREATED_FAILURE,
+    ADVERTS_DETAIL_REQUEST,
+    ADVERTS_DETAIL_SUCCESS,
+    ADVERTS_DETAIL_FAILURE,
     TAGS_LOADED_REQUEST,
     TAGS_LOADED_SUCCESS,
     TAGS_LOADED_FAILURE,
     UI_RESET_ERROR
 } from './types';
-import { getAdvertsLoaded, getTagsLoaded } from './selectors.js';
+import { getAdvertsLoaded, getTagsLoaded, getAdvertDetail } from './selectors.js';
 
 export const authLoginRequest = () => {
     return {
@@ -202,6 +205,45 @@ export const advertsCreatAction = (newAdvert, photo) => {
             history.push(`/advert/${createdAdvert.id}`);
         } catch (error) {
             dispatch(advertsCreatedFailure(error));
+        }
+    };
+};
+
+export const advertsDetailRequest = () => {
+    return {
+        type: ADVERTS_DETAIL_REQUEST
+    };
+};
+
+export const advertsDetailSuccess = (advert) => {
+    return {
+        type: ADVERTS_DETAIL_SUCCESS,
+        payload: advert
+    };
+};
+
+export const advertsDetailFailure = (error) => {
+    return {
+        type: ADVERTS_DETAIL_FAILURE,
+        payload: error,
+        error: true
+    };
+};
+
+export const advertsDetailAction = (advertId) => {
+    return async function (dispatch, getState, { api }) {
+        const advertLoaded = getAdvertDetail(getState(), advertId);
+        if (advertLoaded) {
+            return;
+        }
+
+        dispatch(advertsDetailRequest());
+        try {
+            const advert = await api.advertsService.getAdvertDetail(advertId);
+            dispatch(advertsDetailSuccess(advert));
+            return advert;
+        } catch (error) {
+            dispatch(advertsDetailFailure());
         }
     };
 };

@@ -10,6 +10,10 @@ export const getAdverts = state =>
        return -1; 
     });
 
+export const getAdvertDetail = (state, advertId) => {
+    return state.adverts.data.find(advert => advert.id === advertId);
+};
+
 export const getTagsLoaded = state => state.tags.loaded;
 
 export const getTags = state => state.tags.data;

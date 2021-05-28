@@ -24,7 +24,7 @@ function App() {
           <NewAdvertPage />
         </PrivateRoute>
         <PrivateRoute isLogged={isLogged} path='/advert/:id'>
-          {routeProps => <AdvertDetailPage isLogged={isLogged} {...routeProps}/>}          
+          {routeProps => <AdvertDetailPage {...routeProps}/>}          
         </PrivateRoute>
         <Route path='/login'>
           { isLogged ? <Redirect to='/' /> : <LoginPage /> }
