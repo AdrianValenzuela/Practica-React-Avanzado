@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginForm snapshot testing 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <FormField
+    className="input is-primary"
+    name="email"
+    onChange={[Function]}
+    placeholder="email"
+    type="text"
+    value=""
+  />
+  <FormField
+    className="input is-primary"
+    name="password"
+    onChange={[Function]}
+    placeholder="password"
+    type="password"
+    value=""
+  />
+  <Checkbox
+    checked={false}
+    className="checkbox login-checkbox"
+    disabled={true}
+    name="remember"
+    onChange={[Function]}
+    text="Remember me"
+    type="checkbox"
+  />
+  <Button
+    className="button is-primary is-rounded"
+    disabled={true}
+    text="Log in"
+  />
+</form>
+`;
